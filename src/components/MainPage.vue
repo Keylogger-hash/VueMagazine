@@ -2,32 +2,53 @@
     <div class="container">
         <div class="item-list">
             <div v-for="item in res" :key="item.id" >
-            <div class="item">
-                    <img :src="item.image" :width="240" :height="240">
-                    <div class="title">
-                        <h5>{{ item.title }}</h5>
-                    </div>
-                    <p>{{ item.price }} $</p>
-                    <div class="button-list">
-                        <button>В корзину</button>
-                    </div>
-                </div>
+                <StoreItem 
+                    :Item="item" 
+                    :SavedItems="savedItems"
+                    @addItem="addItem" 
+                    @removeItem="removeItem" 
+                    @increase="increase" 
+                    @decrease="decrease">
+                </StoreItem>
             </div>
         </div>
     </div>
 </template>
 <script>
+import StoreItem from './StoreItem.vue';
+import getApiProducts from '../api/main';
 export default{
     name:'MainPage',
+    props:{
+        totalCount:Number,
+        savedItems: Object
+    },
+    emits:['increase','decrease','addItem','removeItem'],
+    components: {
+        StoreItem
+    },
     data(){
         return {
-            res:[]
+            res:[],
+            
         }
     },
     methods:{
         async getProducts(){
-            this.res = await fetch('https://fakestoreapi.com/products?offset=0&limit=100').then(res=>res.json())
+            this.res = await getApiProducts()
             console.log(this.res);
+        },
+        addItem(item){
+            this.$emit('addItem',item)
+        },
+        removeItem(item){
+            this.$emit('removeItem',item)
+        },
+        increase(){
+            this.$emit('increase')
+        },
+        decrease(){
+            this.$emit('decrease')
         }
     },
     mounted(){
@@ -38,6 +59,7 @@ export default{
 </script>
 <style scoped>
 .container {
+    padding-top:40px;
 }
 .item-list{
     display: flex;
@@ -45,22 +67,6 @@ export default{
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-}
-.title{
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    -webkit-line-clamp: 2;
-}
-.description{
-}
-.item{
-    border: 1px solid grey;
-    margin-top:10px;
-    margin-bottom: 10px;
-    margin-right: 10px;
-    align-items: stretch;
-    flex-direction: row;
-    width:400px;
+    margin-top:16px;
 }
 </style>
