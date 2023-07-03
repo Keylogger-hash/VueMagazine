@@ -46,10 +46,9 @@ export default defineComponent({
       console.log(savedItems)
     }
     const removeItem = (item)=>{
-      if(savedItems.items[item.id]["count"]<=0){
+      savedItems.items[item.id]["count"] -= 1
+      if(savedItems.items[item.id]["count"]===0){
         delete savedItems.items[item.id]
-      }else{
-        savedItems.items[item.id]["count"] -= 1
       }
       console.log('Remove element')
       console.log(savedItems)

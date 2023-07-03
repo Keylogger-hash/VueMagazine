@@ -2,10 +2,12 @@
     <div class="header">
         <div class="header-content">
             <div class="header-title">
-                FakeStore
+                <h1>
+                    FakeStore
+                </h1>
             </div>
             <div class="logo-cart">
-                <div class="order-button" :class="getActiveOrderButton" @click="openModal">
+                <div class="order-button" role="button" :class="getActiveOrderButton" @click="openModal">
                     <span>
                         Заказать
                     </span>
@@ -26,7 +28,7 @@
 
 <script>
 import cart from '../assets/cart.svg'
-import CartModal from './CartModal.vue';
+import CartModal from './CartModal/CartModal.vue';
 export default {
     name: "HeaderMagazine",
     props: {
@@ -70,19 +72,17 @@ export default {
 }
 </script>
 <style scoped>
-button{
 
-}
 .header{
     background-color: #fff;
     border: 1px solid rgba(204,214,228,.6);
     position: fixed;  
     top:0;
-    padding:4px;  
+    padding-top:4px;
+    padding-bottom:4px;  
     width: 100%;
 }
 .header-title{
-    margin-top:3px;
     margin-left:16px;
     
 }

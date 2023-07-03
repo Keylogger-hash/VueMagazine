@@ -1,7 +1,7 @@
 <template>
     <div class="item" :class="{active:IsActive}">
         <div class="item-image">
-            <img :src="Item.image" :width="240" :height="240">
+            <img :src="Item.image" :width="240" :height="240" loading="lazy" >
         </div>
         <div class="item-content">
             <div class="item-title">
@@ -11,7 +11,7 @@
             <div class="item-button-list">
                 <div v-if="!IsClick">
                     <div type="button" class="button-add" tabindex="0" @click="handleClick(Item)">
-                        <span class="">
+                        <span >
                             Добавить в корзину
                         </span>
                     </div>
