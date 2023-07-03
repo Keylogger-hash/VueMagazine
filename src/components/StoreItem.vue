@@ -4,7 +4,7 @@
             <img :src="Item.image" :width="240" :height="240" loading="lazy" >
         </div>
         <div class="item-content">
-            <div class="item-title">
+            <div class="item-title" @click="openDetailModal">
                 <h5>{{ Item.title }}</h5>
             </div>
             <p>{{ Item.price }} $</p>
@@ -36,8 +36,14 @@
         </div>
     </div>
 </div>
+<FullItem 
+    :Id="Item.id"
+    :IsOpenDetailModal="IsOpenDetailModal"
+    @closeDetailModal="closeDetailModal"
+></FullItem>
 </template>
 <script>
+import FullItem from './FullItem.vue'
 export default {
     name:'StoreItem',
     emits:['increase','decrease','addItem','removeItem'],
@@ -46,16 +52,24 @@ export default {
         totalCount:Number,
         SavedItems:Object
     },
-
+    components:{FullItem},
     data(){
         return {
             StoreCount:0,
             IsActive:false,
-            IsClick:false
+            IsClick:false,
+            IsOpenDetailModal:false
         }
     },
 
     methods:{
+        openDetailModal(){
+            this.IsOpenDetailModal=true
+        },
+        closeDetailModal(){
+            this.IsOpenDetailModal=false
+        },
+        
         add(item){
             this.inc()
             this.$emit('addItem',item)
@@ -85,6 +99,9 @@ export default {
             this.$emit('addItem',item)
             this.IsClick = true;
             this.IsActive = true;
+        },
+        openDetailPreview(id){
+            console.log(id)
         }
     }
 }
@@ -138,11 +155,14 @@ button{
     align-items: center;
 }
 .item-title{
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    -webkit-line-clamp: 2;
+    white-space: wrap;
+    word-break: break-word;
+    -webkit-line-clamp: 3;
     user-select: none;
+}
+.item-title:hover{
+    color:#0050e0;
+    cursor: pointer;
 }
 .item-button-list{
     margin:4px;

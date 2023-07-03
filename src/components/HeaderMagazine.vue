@@ -7,7 +7,7 @@
                 </h1>
             </div>
             <div class="logo-cart">
-                <div class="order-button" role="button" :class="getActiveOrderButton" @click="openModal">
+                <div class="order-button" role="button"  :class="getActiveOrderButton" @click="openModal">
                     <span>
                         Заказать
                     </span>
@@ -23,7 +23,12 @@
             </div>
         </div>
     </div>
-    <CartModal :isModalOpen="isModalOpen" :savedItems="savedItems" @closeModal="closeModal"></CartModal>
+    <CartModal 
+        :isModalOpen="isModalOpen" 
+        :savedItems="savedItems" 
+        @closeModal="closeModal" 
+        @clearSavedItems="clearSavedItems">
+    </CartModal>
 </template>
 
 <script>
@@ -52,6 +57,9 @@ export default {
         closeModal(){
             console.log('Close modal')
             this.isModalOpen = false;
+        },
+        clearSavedItems(){
+            this.$emit('clearSavedItems')
         }
     },
     computed: {
@@ -65,6 +73,7 @@ export default {
     emits: [
         "increase",
         "decrease",
+        "clearSavedItems",
         "openModal",
         "closeModal"
     ],
@@ -126,7 +135,6 @@ export default {
 }
 .non-active{
     background-color: #adb5bd;
-    cursor:none;
 }
 .order-button{
     border-radius: 12px;

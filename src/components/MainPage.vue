@@ -25,7 +25,7 @@
 </template>
 <script>
 import StoreItem from './StoreItem.vue';
-import getApiProducts from '../api/main';
+import {getApiProducts} from '../api/main';
 import rocket from '../assets/rocket.gif';
 export default{
     name:'MainPage',

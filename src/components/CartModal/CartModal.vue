@@ -37,7 +37,7 @@
             <div>
                 Сумма: {{ totalSum }}
             </div>
-            <div class="order-button">
+            <div class="order-button" @click="handleClickOrder">
                 <span>
                     Оформить заказ
                 </span>
@@ -49,7 +49,7 @@
 import CartModalItem from './CartModalItem.vue';
 export default{
     name: "CartModal",
-    emits: ["closeModal"],
+    emits: ["closeModal","clearSavedItems"],
     props: {
         isModalOpen: Boolean,
         savedItems: Object
@@ -59,9 +59,16 @@ export default{
         closeModal() {
             this.$emit("closeModal");
         },
-        openSuccessModal(){
+        clearSavedItems(){
+            this.$emit('clearSavedItems')
+        },
+        handleClickOrder(){
+            alert('Вы успешно оформили заказ')
+            this.clearSavedItems()
+            this.closeModal()
+            window.location.reload()            
+        },
 
-        }
     },
     computed: {
         totalSum() {
@@ -120,13 +127,14 @@ export default{
     height:500px;
     border-radius: 12px;
     border: 1px solid red;
-    padding:6px;
     display: flex;
+    width:100%;
 }
 .cart-box-content{
     display: flex;
+    overflow-y: scroll;
     flex-direction: column;
-    overflow-y: auto;
+    width:100%;
 }
 .order-button{
     padding:10px;
@@ -135,9 +143,9 @@ export default{
     color:#fff;
     cursor:pointer;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: stretch;
     text-align: center;
+    justify-content: center;
 }
 .order-button:hover{
     background-color: #0059ffc7;

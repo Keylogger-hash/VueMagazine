@@ -2,6 +2,7 @@
   <HeaderMagazine 
     :totalCount="totalCount"
     :savedItems="savedItems"
+    @clearSavedItems = "clearSavedItems"
     @increase="handleIncrease" 
     @decrease="handleDecrease">
   </HeaderMagazine>
@@ -53,15 +54,14 @@ export default defineComponent({
       console.log('Remove element')
       console.log(savedItems)
     }
-      // if (savedItems.hasOwnPropery(item.Id)!==false){
-      //   savedItems
-      // } else{
-
-      // }
+    const clearSavedItems = ()=>{
+      savedItems["items"] = {}
+    }
     
     return {
       totalCount,
       savedItems,
+      clearSavedItems,
       addItem,
       removeItem,
       handleIncrease,
